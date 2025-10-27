@@ -93,6 +93,8 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 justify-content: space-between;
+background-color: #fff5f5;
+padding: 30px;
 }
 .elemento-texto
 {
@@ -101,4 +103,14 @@ width: 55%;
 .elemento-foto
 {
 width: 43%;
+}
+.lista {
+    margin-left: 40px;
+}
+.Contenedor-listado {
+    margin-top: 20px;
+}
+#foto-contacto {
+    margin-top: 100px;
+    flex-direction: row;
 }
