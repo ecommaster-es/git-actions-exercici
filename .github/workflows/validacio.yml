@@ -1,0 +1,33 @@
+name: Validación del proyecto web
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validar-estructura:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Comprobar estructura básica
+        run: |
+          test -f index.html || (echo "Error: falta index.html" && exit 1)
+          test -d css || (echo "Error: falta la carpeta css" && exit 1)
+          test -f css/style.css || (echo "Error: falta css/style.css" && exit 1)
+          test -d primer-trimestre || (echo "Error: falta la carpeta primer-trimestre" && exit 1)
+          test -d segundo-trimestre || (echo "Error: falta la carpeta segundo-trimestre" && exit 1)
+          test -d tercer-trimestre || (echo "Error: falta la carpeta tercer-trimestre" && exit 1)
+
+      - name: Comprobar HTML en cada trimestre
+        run: |
+          ls primer-trimestre/*.html >/dev/null 2>&1 || (echo "Error: no hay archivos HTML en primer-trimestre" && exit 1)
+          ls segundo-trimestre/*.html >/dev/null 2>&1 || (echo "Error: no hay archivos HTML en segundo-trimestre" && exit 1)
+          ls tercer-trimestre/*.html >/dev/null 2>&1 || (echo "Error: no hay archivos HTML en tercer-trimestre" && exit 1)
+
+      - name: Mensaje final
+        run: echo "Validación correcta: la estructura del proyecto es válida"
