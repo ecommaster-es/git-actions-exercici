@@ -2,32 +2,32 @@ name: Validacion del proyecto web
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   validar-estructura:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar repositorio
+      - name: Checkout del repositorio
         uses: actions/checkout@v4
 
       - name: Comprobar estructura basica
         run: |
-          test -f index.html || (echo "Error: falta index.html" && exit 1)
-          test -d css || (echo "Error: falta la carpeta css" && exit 1)
-          test -f css/style.css || (echo "Error: falta css/style.css" && exit 1)
-          test -d primer-trimestre || (echo "Error: falta la carpeta primer-trimestre" && exit 1)
-          test -d segundo-trimestre || (echo "Error: falta la carpeta segundo-trimestre" && exit 1)
-          test -d tercer-trimestre || (echo "Error: falta la carpeta tercer-trimestre" && exit 1)
+          if [ ! -f index.html ]; then echo "Falta index.html"; exit 1; fi
+          if [ ! -d css ]; then echo "Falta carpeta css"; exit 1; fi
+          if [ ! -f css/style.css ]; then echo "Falta css/style.css"; exit 1; fi
+          if [ ! -d primer-trimestre ]; then echo "Falta primer-trimestre"; exit 1; fi
+          if [ ! -d segundo-trimestre ]; then echo "Falta segundo-trimestre"; exit 1; fi
+          if [ ! -d tercer-trimestre ]; then echo "Falta tercer-trimestre"; exit 1; fi
 
-      - name: Comprobar HTML en cada trimestre
+      - name: Comprobar HTML en trimestres
         run: |
-          ls primer-trimestre/*.html >/dev/null 2>&1 || (echo "Error: no hay HTML en primer-trimestre" && exit 1)
-          ls segundo-trimestre/*.html >/dev/null 2>&1 || (echo "Error: no hay HTML en segundo-trimestre" && exit 1)
-          ls tercer-trimestre/*.html >/dev/null 2>&1 || (echo "Error: no hay HTML en tercer-trimestre" && exit 1)
+          ls primer-trimestre/*.html >/dev/null 2>&1 || (echo "No hay HTML en primer-trimestre"; exit 1)
+          ls segundo-trimestre/*.html >/dev/null 2>&1 || (echo "No hay HTML en segundo-trimestre"; exit 1)
+          ls tercer-trimestre/*.html >/dev/null 2>&1 || (echo "No hay HTML en tercer-trimestre"; exit 1)
 
-      - name: Resultado final
-        run: echo "Validacion correcta: estructura OK"
+      - name: OK final
+        run: echo "Estructura correcta"
